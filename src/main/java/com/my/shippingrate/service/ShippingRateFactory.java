@@ -26,19 +26,16 @@ public class ShippingRateFactory {
                 ));
     }
 
-    public ResponseWrapperDTO fetchShippingRate(PayloadDTO request) {
-        String provider = request.getProvider().toUpperCase();
-        ShippingRateService service = serviceMap.get(provider);
+    public ShippingRateService getService(String provider) {
+
+        ShippingRateService service = serviceMap.get(provider.toUpperCase());
+        log.info("Fetch shipping rate for service: {}", service);
 
         if (service == null) {
             log.warn("Unsupported provider requested: {}", provider);
             throw new IllegalArgumentException("Unsupported provider: " + provider);
         }
 
-        return service.fetchShippingRate(request);
-    }
-
-    public ShippingRateService getService(String provider) {
-        return serviceMap.get(provider.toUpperCase());
+        return service;
     }
 }
