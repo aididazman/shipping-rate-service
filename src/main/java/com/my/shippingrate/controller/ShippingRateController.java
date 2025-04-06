@@ -1,6 +1,6 @@
 package com.my.shippingrate.controller;
 
-import com.my.shippingrate.dto.request.ProviderDTO;
+import com.my.shippingrate.dto.request.PayloadDTO;
 import com.my.shippingrate.dto.response.RatesDTO;
 import com.my.shippingrate.dto.response.ResponseWrapperDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,9 +23,10 @@ public class ShippingRateController {
     //@TODO add logic to process request bodies
     @Operation( summary = "Calculate shipping rates", tags = { "shipping-rate" })
     @PostMapping("/rates")
-    public ResponseEntity<ResponseWrapperDTO> calculateShippingRates(@RequestBody List<ProviderDTO> providerListDTO) {
+    public ResponseEntity<ResponseWrapperDTO> fetchShippingRate(@RequestBody PayloadDTO request) {
         List<RatesDTO> ratesList = new ArrayList<>();
         ResponseWrapperDTO data = new ResponseWrapperDTO(ratesList);
+        log.info("Request to fetch shipping rate for : {}", request.getProvider());
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
