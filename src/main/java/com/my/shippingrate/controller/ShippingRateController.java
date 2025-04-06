@@ -5,6 +5,8 @@ import com.my.shippingrate.dto.request.JntRequestDTO;
 import com.my.shippingrate.dto.request.PayloadDTO;
 import com.my.shippingrate.dto.response.RatesDTO;
 import com.my.shippingrate.dto.response.ResponseWrapperDTO;
+import com.my.shippingrate.service.ShippingRateFactory;
+import com.my.shippingrate.service.ShippingRateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -24,6 +26,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/shipping")
 public class ShippingRateController {
+
+    private final ShippingRateFactory shippingRateFactory;
+
+    public ShippingRateController(ShippingRateFactory shippingRateFactory) {
+        this.shippingRateFactory = shippingRateFactory;
+    }
 
     //@TODO add logic to process request bodies
     @Operation( summary = "Calculate shipping rates", tags = { "shipping-rate" })
@@ -67,10 +75,9 @@ public class ShippingRateController {
                     }
             )
     ) @RequestBody PayloadDTO request) {
-        List<RatesDTO> ratesList = new ArrayList<>();
-        ResponseWrapperDTO data = new ResponseWrapperDTO(ratesList);
         log.info("Request to fetch shipping rate for : {}", request.getProvider());
-        return new ResponseEntity<>(data, HttpStatus.OK);
+        ShippingRateService service = shippingRateFactory.getService(request.getProvider());
+        return new ResponseEntity<>(service.fetchShippingRate(request), HttpStatus.OK);
     }
 
 

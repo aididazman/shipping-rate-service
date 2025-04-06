@@ -37,4 +37,8 @@ public class ShippingRateFactory {
 
         return service.fetchShippingRate(request);
     }
+
+    public ShippingRateService getService(String provider) {
+        return serviceMap.get(provider.toUpperCase());
+    }
 }
