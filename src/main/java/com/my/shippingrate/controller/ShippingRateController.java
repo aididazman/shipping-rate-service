@@ -1,9 +1,9 @@
 package com.my.shippingrate.controller;
 
-import com.my.shippingrate.dto.request.CityLinkRequestDTO;
-import com.my.shippingrate.dto.request.JntRequestDTO;
+import com.my.shippingrate.dto.request.citylink.CityLinkRequestDTO;
+import com.my.shippingrate.dto.request.jnt.JntRequestDTO;
 import com.my.shippingrate.dto.request.PayloadDTO;
-import com.my.shippingrate.dto.response.RatesDTO;
+import com.my.shippingrate.dto.response.RateDTO;
 import com.my.shippingrate.dto.response.ResponseWrapperDTO;
 import com.my.shippingrate.service.ShippingRateFactory;
 import com.my.shippingrate.service.ShippingRateService;
@@ -24,7 +24,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/shipping")
+@RequestMapping("/api")
 public class ShippingRateController {
 
     private final ShippingRateFactory shippingRateFactory;
@@ -33,10 +33,9 @@ public class ShippingRateController {
         this.shippingRateFactory = shippingRateFactory;
     }
 
-    //@TODO add logic to process request bodies
     @Operation( summary = "Calculate shipping rates", tags = { "shipping-rate" })
-    @PostMapping("/rates")
-    public ResponseEntity<ResponseWrapperDTO> fetchShippingRate(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+    @PostMapping("v1/shipping/rates")
+    public ResponseEntity<ResponseWrapperDTO> calculateShippingRate(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Polymorphic request body for different providers",
             required = true,
             content = @Content(
@@ -45,39 +44,52 @@ public class ShippingRateController {
                             @ExampleObject(
                                     name = "J&T Request",
                                     summary = "Example request for J&T",
-                                    value = "{\n" +
-                                            "  \"provider\": \"JNT\",\n" +
-                                            "  \"_token\": \"abc123\",\n" +
-                                            "  \"shipping_rates_type\": \"domestic\",\n" +
-                                            "  \"sender_postcode\": \"43000\",\n" +
-                                            "  \"receiver_postcode\": \"43300\",\n" +
-                                            "  \"destination_country\": \"BWN\",\n" +
-                                            "  \"shipping_type\": \"EZ\",\n" +
-                                            "  \"weight\": 11,\n" +
-                                            "  \"length\": 1,\n" +
-                                            "  \"width\": 1,\n" +
-                                            "  \"height\": 1,\n" +
-                                            "  \"insurance\": \"\",\n" +
-                                            "  \"item_value\": 111\n" +
-                                            "}"
+                                    value = """
+                                        {
+                                            "provider": "JNT",
+                                            "_token": "abc123",
+                                            "shipping_rates_type": "domestic",
+                                            "sender_postcode": "43000",
+                                            "receiver_postcode": "43300",
+                                            "destination_country": "BWN",
+                                            "shipping_type": "EZ",
+                                            "weight": 11,
+                                            "length": 1,
+                                            "width": 1,
+                                            "height": 1,
+                                            "insurance": "",
+                                            "item_value": 111
+                                        }
+                                    """
                             ),
                             @ExampleObject(
                                     name = "CityLink Request",
                                     summary = "Example request for CityLink",
-                                    value = "{\n" +
-                                            "  \"provider\": \"CITYLINK\",\n" +
-                                            "  \"token\": \"xyz456\",\n" +
-                                            "  \"origin_postcode\": \"50000\",\n" +
-                                            "  \"destination_postcode\": \"56000\",\n" +
-                                            "  \"weight\": 5\n" +
-                                            "}"
+                                    value = """
+                                        {
+                                            "provider": "CITYLINK",
+                                            "origin_country": "MY",
+                                            "origin_state": "Selangor",
+                                            "origin_postcode": "43000",
+                                            "destination_country": "MY",
+                                            "destination_state": "Selangor",
+                                            "destination_postcode": "43300",
+                                            "length": 10,
+                                            "width": 10,
+                                            "height": 10,
+                                            "selected_type": 1,
+                                            "parcel_weight": 10,
+                                            "document_weight": 0
+                                        }
+                                    """
                             )
                     }
             )
     ) @RequestBody PayloadDTO request) {
         log.info("Request to fetch shipping rate for : {}", request.getProvider());
         ShippingRateService service = shippingRateFactory.getService(request.getProvider());
-        return new ResponseEntity<>(service.fetchShippingRate(request), HttpStatus.OK);
+        List<RateDTO> rateDTOList = new ArrayList<>();
+        return new ResponseEntity<>(service.calculateShippingRate(request, rateDTOList), HttpStatus.OK);
     }
 
 

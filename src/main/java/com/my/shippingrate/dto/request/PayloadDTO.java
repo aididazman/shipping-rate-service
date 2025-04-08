@@ -2,11 +2,12 @@ package com.my.shippingrate.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.my.shippingrate.dto.request.citylink.CityLinkRequestDTO;
+import com.my.shippingrate.dto.request.jnt.JntRequestDTO;
 import lombok.Data;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
         property = "provider",  // This will be used to identify the type
         visible = true
 )

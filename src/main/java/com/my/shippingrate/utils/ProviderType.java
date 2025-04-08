@@ -8,8 +8,8 @@ import lombok.ToString;
 @Getter
 @ToString
 public enum ProviderType {
-    JNT("https://www.jtexpress.my/shipping-rates"),
-    CITYLINK("https://www.citylinkexpress.com/calculator/");
+    JNT("jt"),
+    CITYLINK("citylink");
 
-    private final String baseUrl;
+    private final String courier;
 }

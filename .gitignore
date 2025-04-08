@@ -41,6 +41,5 @@ build/
 Thumbs.db
 
 # Ignore application configs
-application.properties
 application.yml
 .env
