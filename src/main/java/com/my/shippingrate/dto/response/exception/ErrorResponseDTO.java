@@ -1,4 +1,4 @@
-package com.my.shippingrate.config.exceptions;
+package com.my.shippingrate.dto.response.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

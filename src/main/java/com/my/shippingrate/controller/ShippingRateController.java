@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +26,10 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class ShippingRateController {
 
     private final ShippingRateFactory shippingRateFactory;
-
-    public ShippingRateController(ShippingRateFactory shippingRateFactory) {
-        this.shippingRateFactory = shippingRateFactory;
-    }
 
     @Operation( summary = "Calculate shipping rates", tags = { "shipping-rate" })
     @PostMapping("v1/shipping/rates")
@@ -47,7 +45,6 @@ public class ShippingRateController {
                                     value = """
                                         {
                                             "provider": "JNT",
-                                            "_token": "abc123",
                                             "shipping_rates_type": "domestic",
                                             "sender_postcode": "43000",
                                             "receiver_postcode": "43300",
@@ -91,7 +88,5 @@ public class ShippingRateController {
         List<RateDTO> rateDTOList = new ArrayList<>();
         return new ResponseEntity<>(service.calculateShippingRate(request, rateDTOList), HttpStatus.OK);
     }
-
-
 
 }
