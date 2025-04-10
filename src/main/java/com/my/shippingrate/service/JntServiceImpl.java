@@ -173,7 +173,7 @@ public class JntServiceImpl implements ShippingRateService {
         return tokenElement.val();
     }
 
-    private List<Map<String, String>> extractDataFromResponse(String htmlResponse) {
+    public List<Map<String, String>> extractDataFromResponse(String htmlResponse) {
 
         List<Map<String, String>> result = new ArrayList<>();
 

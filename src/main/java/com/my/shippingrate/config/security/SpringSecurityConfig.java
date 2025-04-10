@@ -1,6 +1,5 @@
 package com.my.shippingrate.config.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,17 +21,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SpringSecurityConfig {
 
-    @Autowired
-    private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${spring.application.username}")
     private String adminUsername;
 
     @Value("${spring.application.password}")
     private String adminPassword;
+
+    public SpringSecurityConfig(JwtAuthenticationEntryPoint authenticationEntryPoint, JwtTokenProvider jwtTokenProvider) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -44,9 +46,12 @@ public class SpringSecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/api/auth/**").permitAll(); // Allow login without auth
-                    authorize.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**").permitAll(); // Allow access to Swagger UI and documentation
-                    authorize.anyRequest().authenticated(); // Require authentication for all other endpoints
+                    // Allow login without auth
+                    authorize.requestMatchers("/api/auth/**").permitAll();
+                    // Allow access to Swagger UI and documentation
+                    authorize.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**").permitAll();
+                    // Require authentication for all other endpoints
+                    authorize.anyRequest().authenticated();
                 });
 
         http.exceptionHandling( exception -> exception

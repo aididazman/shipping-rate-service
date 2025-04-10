@@ -1,7 +1,5 @@
 package com.my.shippingrate.service;
 
-import com.my.shippingrate.dto.request.PayloadDTO;
-import com.my.shippingrate.dto.response.ResponseWrapperDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
