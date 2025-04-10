@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.my.shippingrate.dto.request.citylink.CityLinkRequestDTO;
 import com.my.shippingrate.dto.request.jnt.JntRequestDTO;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @JsonTypeInfo(
@@ -17,5 +19,8 @@ import lombok.Data;
 })
 @Data
 public abstract class PayloadDTO {
+
+    @NotBlank
+    @NotNull(message = "Provider cannot be null")
     private String provider;
 }

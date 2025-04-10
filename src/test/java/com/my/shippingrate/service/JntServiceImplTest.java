@@ -1,5 +1,7 @@
 package com.my.shippingrate.service;
 
+import com.my.shippingrate.service.jnt.JntServiceImpl;
+import com.my.shippingrate.service.redis.RedisService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,6 +25,9 @@ public class JntServiceImplTest {
     @Qualifier("jntWebClient")
     private WebClient webClient;
 
+    @Autowired
+    private RedisService redisService;
+
     @Test
     void testWithHtmlSample() throws Exception {
 
@@ -31,8 +36,8 @@ public class JntServiceImplTest {
         String html = loader.loadHtmlAsString("JNT_SAMPLE_HTML_RESPONSE.html");
         assertNotNull(html);
 
-        JntServiceImpl service = new JntServiceImpl(webClient);
-        List<Map<String, String>> result = service.extractDataFromResponse(html);
+        JntServiceImpl service = new JntServiceImpl(webClient, redisService);
+        String result = service.extractDataFromResponse(html);
 
     }
 
