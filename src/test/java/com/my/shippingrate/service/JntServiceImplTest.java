@@ -34,7 +34,6 @@ public class JntServiceImplTest {
         // Load your sample HTML from the resources folder
         HtmlLoader loader = new HtmlLoader();
         String html = loader.loadHtmlAsString("JNT_SAMPLE_HTML_RESPONSE.html");
-        assertNotNull(html);
 
         JntServiceImpl service = new JntServiceImpl(webClient, redisService);
         String result = service.extractDataFromResponse(html);

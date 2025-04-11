@@ -24,10 +24,10 @@ public class RedisCacheConfig {
 
     private final RedisConnectionFactory redisConnectionFactory;
 
-    @Value("${spring.redis.host}")
+    @Value("${spring.data.redis.host}")
     private String host;
 
-    @Value("${spring.redis.port}")
+    @Value("${spring.data.redis.port}")
     private String port;
 
     public RedisCacheConfig(RedisConnectionFactory redisConnectionFactory) {
@@ -40,7 +40,7 @@ public class RedisCacheConfig {
             String pong = redisConnectionFactory.getConnection().ping();
             log.info("Redis connection established: {}", host + ":" + port);
         } catch (Exception e) {
-            log.error("Redis connection failed", e);
+            log.error("Redis connection failed with {}", host + ":" + port, e);
         }
     }
 

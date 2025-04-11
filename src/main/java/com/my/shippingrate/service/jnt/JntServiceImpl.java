@@ -180,7 +180,7 @@ public class JntServiceImpl implements ShippingRateService {
     }
 
     private ResponseWrapperDTO fetchRate(List<RateDTO> rateDTOList, String cacheKey, String rateFromHtml) {
-        
+
         BigDecimal rate = new BigDecimal(rateFromHtml);
         RateDTO rateDTO =  new RateDTO(ProviderType.JNT.getCourier(), rate);
         rateDTOList.add(rateDTO);
