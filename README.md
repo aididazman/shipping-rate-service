@@ -47,7 +47,8 @@ This section requires Docker to be installed and running in your local
 ![image](https://github.com/user-attachments/assets/00d87112-8a34-4c29-b393-640154ca5b15)
 
 >[!NOTE]
->Ensure that all properties is properly configured correctly in application.properties before running `docker-compose up --build`\ For example, user credentials have been injected in the application.properties correctly
+>Ensure that all properties is properly configured correctly in application.properties before running `docker-compose up --build`\
+>For example, user credentials have been injected in the application.properties correctly
 
 
 ## API documentation
