@@ -49,15 +49,15 @@ public class CityLinkRequestDTO extends PayloadDTO {
     @NotNull(message = "Height is required")
     private Double height;
 
-    @NotNull(message = "Height is required")
+    @NotNull(message = "Selected type is required")
     @JsonProperty("selected_type")
     private Integer selectedType;
 
     @DecimalMax(value = "340", message = "Parcel weight should not be greater than 340")
     @JsonProperty("parcel_weight")
-    private Double parcelWeight;
+    private Double parcelWeight = 0.0;
 
     @DecimalMax(value = "340", message = "Parcel weight should not be greater than 340")
     @JsonProperty("document_weight")
-    private Double documentWeight;
+    private Double documentWeight = 0.0;
 }

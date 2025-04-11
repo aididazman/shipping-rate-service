@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,46 +43,46 @@ public class ShippingRateController {
                                     name = "J&T Request",
                                     summary = "Example request for J&T",
                                     value = """
-                                        {
-                                            "provider": "JNT",
-                                            "shipping_rates_type": "domestic",
-                                            "sender_postcode": "43000",
-                                            "receiver_postcode": "43300",
-                                            "destination_country": "BWN",
-                                            "shipping_type": "EZ",
-                                            "weight": 11,
-                                            "length": 1,
-                                            "width": 1,
-                                            "height": 1,
-                                            "insurance": "",
-                                            "item_value": 111
-                                        }
-                                    """
+                                    {
+                                        "provider": "JNT",
+                                        "shipping_rates_type": "domestic",
+                                        "sender_postcode": "43000",
+                                        "receiver_postcode": "43300",
+                                        "destination_country": "BWN (required only for international)",
+                                        "shipping_type": "EZ (e.g. EZ, EX, HV)",
+                                        "weight": 11,
+                                        "length": 1,
+                                        "width": 1,
+                                        "height": 1,
+                                        "insurance": "(optional, skip if not insured)",
+                                        "item_value": 111
+                                    }
+                                """
                             ),
                             @ExampleObject(
                                     name = "CityLink Request",
                                     summary = "Example request for CityLink",
                                     value = """
-                                        {
-                                            "provider": "CITYLINK",
-                                            "origin_country": "MY",
-                                            "origin_state": "Selangor",
-                                            "origin_postcode": "43000",
-                                            "destination_country": "MY",
-                                            "destination_state": "Selangor",
-                                            "destination_postcode": "43300",
-                                            "length": 10,
-                                            "width": 10,
-                                            "height": 10,
-                                            "selected_type": 1,
-                                            "parcel_weight": 10,
-                                            "document_weight": 0
-                                        }
-                                    """
+                                    {
+                                        "provider": "CITYLINK",
+                                        "origin_country": "MY",
+                                        "origin_state": "Selangor",
+                                        "origin_postcode": "43000",
+                                        "destination_country": "MY",
+                                        "destination_state": "Selangor",
+                                        "destination_postcode": "43300",
+                                        "length": 10,
+                                        "width": 10,
+                                        "height": 10,
+                                        "selected_type": "1 (1=Parcel, 2=Document)",
+                                        "parcel_weight": "10 (required if selected_type=1)",
+                                        "document_weight": "0 (required if selected_type=2)"
+                                    }
+                                """
                             )
                     }
             )
-    ) @RequestBody @Valid PayloadDTO request) {
+    ) @RequestBody PayloadDTO request) {
         log.info("Request to fetch shipping rate for : {}", request.getProvider());
         ShippingRateService service = shippingRateFactory.getService(request.getProvider());
         List<RateDTO> rateDTOList = new ArrayList<>();

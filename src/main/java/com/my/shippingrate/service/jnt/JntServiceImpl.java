@@ -103,9 +103,16 @@ public class JntServiceImpl implements ShippingRateService {
         formData.add("sender_postcode", jntRequestDTO.getSenderPostcode());
         formData.add("receiver_postcode", jntRequestDTO.getReceiverPostcode());
         formData.add("weight", String.valueOf(jntRequestDTO.getWeight()));
-        formData.add("length", String.valueOf(jntRequestDTO.getLength()));
-        formData.add("width", String.valueOf(jntRequestDTO.getWidth()));
-        formData.add("height", String.valueOf(jntRequestDTO.getHeight()));
+
+        String length = jntRequestDTO.getLength() != null ? String.valueOf(jntRequestDTO.getLength()) : "";
+        formData.add("length", length);
+
+        String width = jntRequestDTO.getWidth() != null ? String.valueOf(jntRequestDTO.getWidth()) : "";
+        formData.add("width", width);
+
+        String height = jntRequestDTO.getHeight() != null ? String.valueOf(jntRequestDTO.getHeight()) : "";
+        formData.add("height", height);
+
         formData.add("destination_country", jntRequestDTO.getDestinationCountry());
         formData.add("shipping_type", jntRequestDTO.getShippingType());
         formData.add("insurance", Optional.ofNullable(jntRequestDTO.getInsurance()).orElse(""));
