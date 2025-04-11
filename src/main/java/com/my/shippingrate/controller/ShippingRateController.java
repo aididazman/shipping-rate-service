@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -82,7 +83,7 @@ public class ShippingRateController {
                             )
                     }
             )
-    ) @RequestBody PayloadDTO request) {
+    ) @RequestBody @Valid PayloadDTO request) {
         log.info("Request to fetch shipping rate for : {}", request.getProvider());
         ShippingRateService service = shippingRateFactory.getService(request.getProvider());
         List<RateDTO> rateDTOList = new ArrayList<>();

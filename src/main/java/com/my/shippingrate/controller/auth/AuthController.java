@@ -30,7 +30,7 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
 
     @Operation( summary = "Authentication login", tags = { "authentication" })
-    @PostMapping("v1/login")
+    @PostMapping("/login")
     public ResponseEntity<JwtResponseDTO> login(@RequestBody LoginDTO loginDTO) {
 
         log.info("Login request for username: {}", loginDTO.username());
