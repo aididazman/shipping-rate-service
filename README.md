@@ -1,6 +1,6 @@
 # Shipping-Rate-Service Application - Documentation
 
-Shipping-rate-service application is a Spring Boot backend REST API application that calculates and fetch shipping rates from various shipping providers. Currently the application only supports City-Link Express and J&T implementations.
+Shipping-rate-service application is a Spring Boot backend REST API application that calculates and fetch shipping rates from various shipping providers. Currently the application only supports City-Link Express implementations.
 This application also use Redis for caching purposes with JWT-based mechanism integrated.
 
 
