@@ -8,7 +8,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public enum ProviderType {
-    JNT("jt"),
     CITYLINK("citylink");
 
     private final String courier;

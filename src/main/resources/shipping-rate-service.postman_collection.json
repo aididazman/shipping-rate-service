@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "240c99ce-7a0a-432e-8ab8-5076f55ce207",
+		"name": "shipping-rate-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "21768706"
+	},
+	"item": [
+		{
+			"name": "shipping-rate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0NTI1MzkxOCwiZXhwIjoxNzQ1ODU4NzE4fQ.H2vrEF0IT9MCdGvYGYc_X-bjs1PNivSh3035BWw3N8rt7zIrQYsRXr2GYR3Pyi9B"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"provider\": \"CITYLINK\",\r\n    \"origin_country\": \"MY\",\r\n    \"origin_state\": \"Selangor\",\r\n    \"origin_postcode\": \"40160\",\r\n    \"destination_country\": \"MY\",\r\n    \"destination_state\": \"Selangor\",\r\n    \"destination_postcode\": \"43300\",\r\n    \"length\": 10,\r\n    \"width\": 10,\r\n    \"height\": 10,\r\n    \"selected_type\": 2,\r\n    // \"parcel_weight\": 341,\r\n    \"document_weight\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/shipping/rates"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"P@ssw0rd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/auth/login"
+			},
+			"response": []
+		}
+	]
+}

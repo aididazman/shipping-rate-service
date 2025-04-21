@@ -1,7 +1,6 @@
 package com.my.shippingrate.controller;
 
 import com.my.shippingrate.dto.request.citylink.CityLinkRequestDTO;
-import com.my.shippingrate.dto.request.jnt.JntRequestDTO;
 import com.my.shippingrate.dto.request.PayloadDTO;
 import com.my.shippingrate.dto.response.RateDTO;
 import com.my.shippingrate.dto.response.ResponseWrapperDTO;
@@ -37,28 +36,8 @@ public class ShippingRateController {
             description = "Polymorphic request body for different providers",
             required = true,
             content = @Content(
-                    schema = @Schema(oneOf = { JntRequestDTO.class, CityLinkRequestDTO.class }),
+                    schema = @Schema(oneOf = { CityLinkRequestDTO.class }),
                     examples = {
-                            @ExampleObject(
-                                    name = "J&T Request",
-                                    summary = "Example request for J&T",
-                                    value = """
-                                    {
-                                        "provider": "JNT",
-                                        "shipping_rates_type": "domestic",
-                                        "sender_postcode": "43000",
-                                        "receiver_postcode": "43300",
-                                        "destination_country": "BWN (required only for international)",
-                                        "shipping_type": "EZ (e.g. EZ, EX, HV)",
-                                        "weight": 11,
-                                        "length": 1,
-                                        "width": 1,
-                                        "height": 1,
-                                        "insurance": "(optional, skip if not insured)",
-                                        "item_value": 111
-                                    }
-                                """
-                            ),
                             @ExampleObject(
                                     name = "CityLink Request",
                                     summary = "Example request for CityLink",
